@@ -1,5 +1,5 @@
 <?php
-// api.php - Web Service per l'Utente Finale
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST");
@@ -9,23 +9,27 @@ include_once 'db.php';
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 
 switch($action) {
-    // READ: L'utente vede gli eventi
-    case 'get_events':
+
+    case 'get_events' :
+
         $stmt = $conn->prepare("SELECT * FROM events WHERE available_seats > 0 ORDER BY event_date ASC");
         $stmt->execute();
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode(["status" => "success", "data" => $events]);
         break;
 
-    // BUSINESS LOGIC: L'utente prenota un posto
-    case 'book':
+  
+    case 'book' :
+
         $data = json_decode(file_get_contents("php://input"));
-        if(!empty($data->event_id) && !empty($data->user_email)) {
+        if(!empty($data->event_id) && !empty($data->user_email)) ù
+        {
             $check = $conn->prepare("SELECT available_seats FROM events WHERE id = ?");
             $check->execute([$data->event_id]);
             $event = $check->fetch(PDO::FETCH_ASSOC);
 
-            if($event && $event['available_seats'] > 0) {
+            if($event && $event['available_seats'] > 0){
+                
                 $conn->beginTransaction();
                 try {
                     $book = $conn->prepare("INSERT INTO bookings (event_id, user_name, user_email) VALUES (?, ?, ?)");
