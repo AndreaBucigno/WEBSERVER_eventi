@@ -5,7 +5,6 @@ include_once 'db.php';
 $message = "";
 $alert_class = "";
 
-// LOGICA DI GESTIONE (CUD)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['add_event'])) {
         try {

@@ -22,7 +22,7 @@ switch($action) {
     case 'book' :
 
         $data = json_decode(file_get_contents("php://input"));
-        if(!empty($data->event_id) && !empty($data->user_email)) ù
+        if(!empty($data->event_id) && !empty($data->user_email)) 
         {
             $check = $conn->prepare("SELECT available_seats FROM events WHERE id = ?");
             $check->execute([$data->event_id]);
